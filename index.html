@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect - Educational Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-graduation-cap"></i> Campus Connect</h1>
+                <p>Educational Management System</p>
+            </div>
+            <div class="login-form">
+                <div class="role-selector">
+                    <button class="role-btn active" data-role="student">Student</button>
+                    <button class="role-btn" data-role="teacher">Teacher</button>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Username or Email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app hidden">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Campus Connect</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-section="attendance">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </button>
+                <button class="nav-item" data-section="tests">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Tests</span>
+                </button>
+                <button class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </button>
+                <button class="nav-item" id="chatbotBtn">
+                    <i class="fas fa-robot"></i>
+                    <span>Sarthi</span>
+                </button>
+            </div>
+            <div class="nav-user">
+                <div class="user-info">
+                    <span id="userName">John Doe</span>
+                    <span id="userRole">Student</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Student Dashboard -->
+            <div id="studentDashboard" class="dashboard">
+                <div class="dashboard-header">
+                    <h1>Student Dashboard</h1>
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-percentage"></i>
+                            <div>
+                                <h3>85%</h3>
+                                <p>Attendance</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-trophy"></i>
+                            <div>
+                                <h3>3rd</h3>
+                                <p>Rank</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <h3>12</h3>
+                                <p>Subjects</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h3>78%</h3>
+                                <p>Average</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Detailed Attendance Section -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-check"></i> Detailed Attendance</h3>
+                            <div class="card-actions">
+                                <button class="btn-icon" onclick="showAttendanceDetails()">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="attendance-overview">
+                                <div class="attendance-chart">
+                                    <canvas id="attendanceChart"></canvas>
+                                </div>
+                                <div class="attendance-summary">
+                                    <div class="attendance-item">
+                                        <span class="label">Present</span>
+                                        <span class="value present">85%</span>
+                                        <span class="count">(34/40 days)</span>
+                                    </div>
+                                    <div class="attendance-item">
+                                        <span class="label">Absent</span>
+                                        <span class="value absent">15%</span>
+                                        <span class="count">(6/40 days)</span>
+                                    </div>
+                                    <div class="attendance-item">
+                                        <span class="label">Late</span>
+                                        <span class="value warning">8%</span>
+                                        <span class="count">(3/40 days)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="attendance-subjects">
+                                <h4>Subject-wise Attendance</h4>
+                                <div class="subject-attendance">
+                                    <div class="subject-item">
+                                        <span class="subject-name">Mathematics</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 90%"></div>
+                                        </div>
+                                        <span class="percentage">90%</span>
+                                    </div>
+                                    <div class="subject-item">
+                                        <span class="subject-name">Physics</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 85%"></div>
+                                        </div>
+                                        <span class="percentage">85%</span>
+                                    </div>
+                                    <div class="subject-item">
+                                        <span class="subject-name">Chemistry</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 80%"></div>
+                                        </div>
+                                        <span class="percentage">80%</span>
+                                    </div>
+                                    <div class="subject-item">
+                                        <span class="subject-name">English</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 95%"></div>
+                                        </div>
+                                        <span class="percentage">95%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed PYQ Section -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-alt"></i> Previous Year Questions</h3>
+                            <div class="card-actions">
+                                <select class="filter-select" onchange="filterPYQ(this.value)">
+                                    <option value="all">All Subjects</option>
+                                    <option value="math">Mathematics</option>
+                                    <option value="physics">Physics</option>
+                                    <option value="chemistry">Chemistry</option>
+                                    <option value="english">English</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="pyq-stats">
+                                <div class="pyq-stat">
+                                    <span class="number">24</span>
+                                    <span class="label">Total Papers</span>
+                                </div>
+                                <div class="pyq-stat">
+                                    <span class="number">1,250</span>
+                                    <span class="label">Questions</span>
+                                </div>
+                                <div class="pyq-stat">
+                                    <span class="number">85%</span>
+                                    <span class="label">Completion</span>
+                                </div>
+                            </div>
+                            <div class="pyq-list">
+                                <div class="pyq-item" data-subject="math">
+                                    <div class="pyq-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span class="file-size">2.4 MB</span>
+                                    </div>
+                                    <div class="pyq-details">
+                                        <h4>Mathematics 2023</h4>
+                                        <p>Class 12 - 50 Questions | 3 Hours</p>
+                                        <div class="pyq-meta">
+                                            <span class="difficulty easy">Easy</span>
+                                            <span class="downloads">1,250 downloads</span>
+                                        </div>
+                                    </div>
+                                    <div class="pyq-actions">
+                                        <button class="btn-download" onclick="downloadPYQ('math2023')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-preview" onclick="previewPYQ('math2023')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="pyq-item" data-subject="physics">
+                                    <div class="pyq-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span class="file-size">1.8 MB</span>
+                                    </div>
+                                    <div class="pyq-details">
+                                        <h4>Physics 2023</h4>
+                                        <p>Class 12 - 45 Questions | 3 Hours</p>
+                                        <div class="pyq-meta">
+                                            <span class="difficulty medium">Medium</span>
+                                            <span class="downloads">980 downloads</span>
+                                        </div>
+                                    </div>
+                                    <div class="pyq-actions">
+                                        <button class="btn-download" onclick="downloadPYQ('physics2023')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-preview" onclick="previewPYQ('physics2023')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="pyq-item" data-subject="chemistry">
+                                    <div class="pyq-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span class="file-size">2.1 MB</span>
+                                    </div>
+                                    <div class="pyq-details">
+                                        <h4>Chemistry 2023</h4>
+                                        <p>Class 12 - 40 Questions | 3 Hours</p>
+                                        <div class="pyq-meta">
+                                            <span class="difficulty hard">Hard</span>
+                                            <span class="downloads">750 downloads</span>
+                                        </div>
+                                    </div>
+                                    <div class="pyq-actions">
+                                        <button class="btn-download" onclick="downloadPYQ('chemistry2023')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-preview" onclick="previewPYQ('chemistry2023')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="pyq-item" data-subject="english">
+                                    <div class="pyq-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span class="file-size">1.5 MB</span>
+                                    </div>
+                                    <div class="pyq-details">
+                                        <h4>English 2023</h4>
+                                        <p>Class 12 - 35 Questions | 3 Hours</p>
+                                        <div class="pyq-meta">
+                                            <span class="difficulty easy">Easy</span>
+                                            <span class="downloads">1,100 downloads</span>
+                                        </div>
+                                    </div>
+                                    <div class="pyq-actions">
+                                        <button class="btn-download" onclick="downloadPYQ('english2023')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                        <button class="btn-preview" onclick="previewPYQ('english2023')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Test Leaderboard -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-trophy"></i> Test Leaderboard</h3>
+                            <div class="card-actions">
+                                <select class="filter-select" onchange="filterLeaderboard(this.value)">
+                                    <option value="overall">Overall</option>
+                                    <option value="math">Mathematics</option>
+                                    <option value="physics">Physics</option>
+                                    <option value="chemistry">Chemistry</option>
+                                    <option value="english">English</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="leaderboard-stats">
+                                <div class="leaderboard-stat">
+                                    <span class="number">150</span>
+                                    <span class="label">Total Students</span>
+                                </div>
+                                <div class="leaderboard-stat">
+                                    <span class="number">78%</span>
+                                    <span class="label">Class Average</span>
+                                </div>
+                                <div class="leaderboard-stat">
+                                    <span class="number">95%</span>
+                                    <span class="label">Highest Score</span>
+                                </div>
+                            </div>
+                            <div class="leaderboard">
+                                <div class="leaderboard-item rank-1">
+                                    <span class="rank">1</span>
+                                    <div class="student-avatar">
+                                        <i class="fas fa-crown"></i>
+                                    </div>
+                                    <div class="student-info">
+                                        <span class="name">Alice Johnson</span>
+                                        <span class="class">Class 12A</span>
+                                        <span class="score">95%</span>
+                                    </div>
+                                    <div class="score-breakdown">
+                                        <span>Math: 98%</span>
+                                        <span>Physics: 92%</span>
+                                        <span>Chemistry: 95%</span>
+                                    </div>
+                                </div>
+                                <div class="leaderboard-item rank-2">
+                                    <span class="rank">2</span>
+                                    <div class="student-avatar">
+                                        <i class="fas fa-medal"></i>
+                                    </div>
+                                    <div class="student-info">
+                                        <span class="name">Bob Smith</span>
+                                        <span class="class">Class 12B</span>
+                                        <span class="score">92%</span>
+                                    </div>
+                                    <div class="score-breakdown">
+                                        <span>Math: 90%</span>
+                                        <span>Physics: 95%</span>
+                                        <span>Chemistry: 91%</span>
+                                    </div>
+                                </div>
+                                <div class="leaderboard-item rank-3 current">
+                                    <span class="rank">3</span>
+                                    <div class="student-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="student-info">
+                                        <span class="name">You</span>
+                                        <span class="class">Class 12A</span>
+                                        <span class="score">88%</span>
+                                    </div>
+                                    <div class="score-breakdown">
+                                        <span>Math: 85%</span>
+                                        <span>Physics: 90%</span>
+                                        <span>Chemistry: 89%</span>
+                                    </div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <span class="rank">4</span>
+                                    <div class="student-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="student-info">
+                                        <span class="name">Charlie Brown</span>
+                                        <span class="class">Class 12A</span>
+                                        <span class="score">85%</span>
+                                    </div>
+                                    <div class="score-breakdown">
+                                        <span>Math: 82%</span>
+                                        <span>Physics: 88%</span>
+                                        <span>Chemistry: 85%</span>
+                                    </div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <span class="rank">5</span>
+                                    <div class="student-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="student-info">
+                                        <span class="name">Diana Prince</span>
+                                        <span class="class">Class 12B</span>
+                                        <span class="score">83%</span>
+                                    </div>
+                                    <div class="score-breakdown">
+                                        <span>Math: 80%</span>
+                                        <span>Physics: 85%</span>
+                                        <span>Chemistry: 84%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Fees Section -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-credit-card"></i> Fee Management</h3>
+                            <div class="card-actions">
+                                <button class="btn-icon" onclick="showFeeHistory()">
+                                    <i class="fas fa-history"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="fee-summary">
+                                <div class="fee-total">
+                                    <span class="label">Total Due</span>
+                                    <span class="amount">$2,500</span>
+                                </div>
+                                <div class="fee-paid">
+                                    <span class="label">Paid</span>
+                                    <span class="amount">$1,800</span>
+                                </div>
+                                <div class="fee-remaining">
+                                    <span class="label">Remaining</span>
+                                    <span class="amount">$700</span>
+                                </div>
+                            </div>
+                            <div class="fee-status">
+                                <div class="fee-item">
+                                    <div class="fee-info">
+                                        <span class="fee-name">Tuition Fee</span>
+                                        <span class="fee-amount">$1,200</span>
+                                    </div>
+                                    <div class="fee-status-badge paid">
+                                        <i class="fas fa-check"></i> Paid
+                                    </div>
+                                    <div class="fee-date">Paid on Dec 1, 2024</div>
+                                </div>
+                                <div class="fee-item">
+                                    <div class="fee-info">
+                                        <span class="fee-name">Library Fee</span>
+                                        <span class="fee-amount">$200</span>
+                                    </div>
+                                    <div class="fee-status-badge paid">
+                                        <i class="fas fa-check"></i> Paid
+                                    </div>
+                                    <div class="fee-date">Paid on Dec 1, 2024</div>
+                                </div>
+                                <div class="fee-item">
+                                    <div class="fee-info">
+                                        <span class="fee-name">Exam Fee</span>
+                                        <span class="fee-amount">$300</span>
+                                    </div>
+                                    <div class="fee-status-badge pending">
+                                        <i class="fas fa-clock"></i> Pending
+                                    </div>
+                                    <div class="fee-date">Due on Dec 20, 2024</div>
+                                </div>
+                                <div class="fee-item">
+                                    <div class="fee-info">
+                                        <span class="fee-name">Transport Fee</span>
+                                        <span class="fee-amount">$400</span>
+                                    </div>
+                                    <div class="fee-status-badge paid">
+                                        <i class="fas fa-check"></i> Paid
+                                    </div>
+                                    <div class="fee-date">Paid on Dec 1, 2024</div>
+                                </div>
+                                <div class="fee-item">
+                                    <div class="fee-info">
+                                        <span class="fee-name">Lab Fee</span>
+                                        <span class="fee-amount">$400</span>
+                                    </div>
+                                    <div class="fee-status-badge overdue">
+                                        <i class="fas fa-exclamation"></i> Overdue
+                                    </div>
+                                    <div class="fee-date">Due on Nov 30, 2024</div>
+                                </div>
+                            </div>
+                            <div class="fee-actions">
+                                <button class="btn-primary" onclick="payFees()">
+                                    <i class="fas fa-credit-card"></i> Pay Now
+                                </button>
+                                <button class="btn-secondary" onclick="downloadReceipt()">
+                                    <i class="fas fa-download"></i> Download Receipt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive Quiz Section -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-question-circle"></i> Practice Quiz</h3>
+                            <div class="card-actions">
+                                <select class="filter-select" onchange="filterQuiz(this.value)">
+                                    <option value="all">All Subjects</option>
+                                    <option value="math">Mathematics</option>
+                                    <option value="physics">Physics</option>
+                                    <option value="chemistry">Chemistry</option>
+                                    <option value="english">English</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="quiz-overview">
+                                <div class="quiz-stats">
+                                    <div class="quiz-stat">
+                                        <span class="number">24</span>
+                                        <span class="label">Available Quizzes</span>
+                                    </div>
+                                    <div class="quiz-stat">
+                                        <span class="number">15</span>
+                                        <span class="label">Completed</span>
+                                    </div>
+                                    <div class="quiz-stat">
+                                        <span class="number">78%</span>
+                                        <span class="label">Average Score</span>
+                                    </div>
+                                    <div class="quiz-stat">
+                                        <span class="number">3rd</span>
+                                        <span class="label">Rank</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-categories">
+                                <div class="quiz-category" data-subject="math">
+                                    <div class="category-header">
+                                        <div class="category-icon">
+                                            <i class="fas fa-calculator"></i>
+                                        </div>
+                                        <div class="category-info">
+                                            <h4>Mathematics</h4>
+                                            <p>12 Quizzes Available</p>
+                                        </div>
+                                        <div class="category-progress">
+                                            <div class="progress-circle">
+                                                <span class="progress-text">85%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="quiz-list">
+                                        <div class="quiz-item" onclick="startQuiz('math2023')">
+                                            <div class="quiz-info">
+                                                <h5>Mathematics 2023 - Set 1</h5>
+                                                <p>50 Questions • 3 Hours • Difficulty: Medium</p>
+                                                <div class="quiz-meta">
+                                                    <span class="attempts">3 attempts</span>
+                                                    <span class="best-score">Best: 85%</span>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-actions">
+                                                <button class="btn-start-quiz">
+                                                    <i class="fas fa-play"></i> Start
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="quiz-item" onclick="startQuiz('math2022')">
+                                            <div class="quiz-info">
+                                                <h5>Mathematics 2022 - Set 2</h5>
+                                                <p>45 Questions • 3 Hours • Difficulty: Hard</p>
+                                                <div class="quiz-meta">
+                                                    <span class="attempts">2 attempts</span>
+                                                    <span class="best-score">Best: 78%</span>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-actions">
+                                                <button class="btn-start-quiz">
+                                                    <i class="fas fa-play"></i> Start
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quiz-category" data-subject="physics">
+                                    <div class="category-header">
+                                        <div class="category-icon">
+                                            <i class="fas fa-atom"></i>
+                                        </div>
+                                        <div class="category-info">
+                                            <h4>Physics</h4>
+                                            <p>8 Quizzes Available</p>
+                                        </div>
+                                        <div class="category-progress">
+                                            <div class="progress-circle">
+                                                <span class="progress-text">72%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="quiz-list">
+                                        <div class="quiz-item" onclick="startQuiz('physics2023')">
+                                            <div class="quiz-info">
+                                                <h5>Physics 2023 - Set 1</h5>
+                                                <p>40 Questions • 3 Hours • Difficulty: Medium</p>
+                                                <div class="quiz-meta">
+                                                    <span class="attempts">1 attempt</span>
+                                                    <span class="best-score">Best: 72%</span>
+                                                </div>
+                                            </div>
+                                            <div class="quiz-actions">
+                                                <button class="btn-start-quiz">
+                                                    <i class="fas fa-play"></i> Start
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Timetable -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> Weekly Timetable</h3>
+                            <div class="card-actions">
+                                <button class="btn-icon" onclick="exportTimetable()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="timetable-nav">
+                                <button class="timetable-nav-btn active" onclick="showTimetableDay('monday')">Mon</button>
+                                <button class="timetable-nav-btn" onclick="showTimetableDay('tuesday')">Tue</button>
+                                <button class="timetable-nav-btn" onclick="showTimetableDay('wednesday')">Wed</button>
+                                <button class="timetable-nav-btn" onclick="showTimetableDay('thursday')">Thu</button>
+                                <button class="timetable-nav-btn" onclick="showTimetableDay('friday')">Fri</button>
+                                <button class="timetable-nav-btn" onclick="showTimetableDay('saturday')">Sat</button>
+                            </div>
+                            <div class="timetable-content">
+                                <div class="timetable-day active" id="monday">
+                                    <div class="day-header">
+                                        <h4>Monday</h4>
+                                        <span class="date">Dec 9, 2024</span>
+                                    </div>
+                                    <div class="timetable-slots">
+                                        <div class="slot current">
+                                            <div class="slot-time">9:00 AM - 10:00 AM</div>
+                                            <div class="slot-subject">Mathematics</div>
+                                            <div class="slot-details">
+                                                <span class="room">Room 201</span>
+                                                <span class="teacher">Dr. Sarah Wilson</span>
+                                            </div>
+                                            <div class="slot-status">Current</div>
+                                        </div>
+                                        <div class="slot">
+                                            <div class="slot-time">10:30 AM - 11:30 AM</div>
+                                            <div class="slot-subject">Physics</div>
+                                            <div class="slot-details">
+                                                <span class="room">Room 205</span>
+                                                <span class="teacher">Prof. Michael Brown</span>
+                                            </div>
+                                            <div class="slot-status">Upcoming</div>
+                                        </div>
+                                        <div class="slot">
+                                            <div class="slot-time">12:00 PM - 1:00 PM</div>
+                                            <div class="slot-subject">Chemistry</div>
+                                            <div class="slot-details">
+                                                <span class="room">Lab 301</span>
+                                                <span class="teacher">Dr. Emily Davis</span>
+                                            </div>
+                                            <div class="slot-status">Upcoming</div>
+                                        </div>
+                                        <div class="slot break">
+                                            <div class="slot-time">1:00 PM - 2:00 PM</div>
+                                            <div class="slot-subject">Lunch Break</div>
+                                        </div>
+                                        <div class="slot">
+                                            <div class="slot-time">2:00 PM - 3:00 PM</div>
+                                            <div class="slot-subject">English</div>
+                                            <div class="slot-details">
+                                                <span class="room">Room 101</span>
+                                                <span class="teacher">Ms. Jennifer Lee</span>
+                                            </div>
+                                            <div class="slot-status">Upcoming</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timetable-day" id="tuesday">
+                                    <div class="day-header">
+                                        <h4>Tuesday</h4>
+                                        <span class="date">Dec 10, 2024</span>
+                                    </div>
+                                    <div class="timetable-slots">
+                                        <div class="slot">
+                                            <div class="slot-time">9:00 AM - 10:00 AM</div>
+                                            <div class="slot-subject">English</div>
+                                            <div class="slot-details">
+                                                <span class="room">Room 101</span>
+                                                <span class="teacher">Ms. Jennifer Lee</span>
+                                            </div>
+                                            <div class="slot-status">Upcoming</div>
+                                        </div>
+                                        <div class="slot">
+                                            <div class="slot-time">10:30 AM - 11:30 AM</div>
+                                            <div class="slot-subject">Biology</div>
+                                            <div class="slot-details">
+                                                <span class="room">Lab 302</span>
+                                                <span class="teacher">Dr. Robert Green</span>
+                                            </div>
+                                            <div class="slot-status">Upcoming</div>
+                                        </div>
+                                        <div class="slot">
+                                            <div class="slot-time">12:00 PM - 1:00 PM</div>
+                                            <div class="slot-subject">Computer Science</div>
+                                            <div class="slot-details">
+                                                <span class="room">Lab 401</span>
+                                                <span class="teacher">Prof. Alex Johnson</span>
+                                            </div>
+                                            <div class="slot-status">Upcoming</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Dashboard -->
+            <div id="teacherDashboard" class="dashboard hidden">
+                <div class="dashboard-header">
+                    <h1>Teacher Dashboard</h1>
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <div>
+                                <h3>5</h3>
+                                <p>Classes</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h3>150</h3>
+                                <p>Students</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <h3>12</h3>
+                                <p>Lectures</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h3>78%</h3>
+                                <p>Avg Grade</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-percentage"></i>
+                            <div>
+                                <h3>92%</h3>
+                                <p>Attendance</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-tasks"></i>
+                            <div>
+                                <h3>8</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Comprehensive Lectures Section -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chalkboard-teacher"></i> Lecture Management</h3>
+                            <div class="card-actions">
+                                <button class="btn-icon" onclick="createNewLecture()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="btn-icon" onclick="viewLectureCalendar()">
+                                    <i class="fas fa-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="lecture-tabs">
+                                <button class="tab-btn active" onclick="showLectureTab('today')">Today</button>
+                                <button class="tab-btn" onclick="showLectureTab('upcoming')">Upcoming</button>
+                                <button class="tab-btn" onclick="showLectureTab('completed')">Completed</button>
+                            </div>
+                            <div class="lecture-content">
+                                <div class="lecture-tab active" id="today-lectures">
+                                    <div class="lecture-stats">
+                                        <div class="lecture-stat">
+                                            <span class="number">3</span>
+                                            <span class="label">Today's Classes</span>
+                                        </div>
+                                        <div class="lecture-stat">
+                                            <span class="number">2</span>
+                                            <span class="label">Completed</span>
+                                        </div>
+                                        <div class="lecture-stat">
+                                            <span class="number">1</span>
+                                            <span class="label">Remaining</span>
+                                        </div>
+                                    </div>
+                                    <div class="lecture-list">
+                                        <div class="lecture-item completed">
+                                            <div class="lecture-time">
+                                                <span class="time">9:00 AM</span>
+                                                <span class="duration">60 min</span>
+                                            </div>
+                                            <div class="lecture-details">
+                                                <h4>Mathematics - Class 12A</h4>
+                                                <p>Room 201 - Calculus Integration</p>
+                                                <div class="lecture-meta">
+                                                    <span class="students">28 students</span>
+                                                    <span class="attendance">96% present</span>
+                                                </div>
+                                            </div>
+                                            <div class="lecture-actions">
+                                                <button class="btn-completed">Completed</button>
+                                                <button class="btn-icon" onclick="viewLectureDetails('math12a')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="lecture-item completed">
+                                            <div class="lecture-time">
+                                                <span class="time">10:30 AM</span>
+                                                <span class="duration">60 min</span>
+                                            </div>
+                                            <div class="lecture-details">
+                                                <h4>Physics - Class 12B</h4>
+                                                <p>Room 205 - Mechanics</p>
+                                                <div class="lecture-meta">
+                                                    <span class="students">25 students</span>
+                                                    <span class="attendance">92% present</span>
+                                                </div>
+                                            </div>
+                                            <div class="lecture-actions">
+                                                <button class="btn-completed">Completed</button>
+                                                <button class="btn-icon" onclick="viewLectureDetails('physics12b')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="lecture-item current">
+                                            <div class="lecture-time">
+                                                <span class="time">12:00 PM</span>
+                                                <span class="duration">60 min</span>
+                                            </div>
+                                            <div class="lecture-details">
+                                                <h4>Mathematics - Class 11A</h4>
+                                                <p>Room 201 - Algebra</p>
+                                                <div class="lecture-meta">
+                                                    <span class="students">30 students</span>
+                                                    <span class="attendance">Starting soon</span>
+                                                </div>
+                                            </div>
+                                            <div class="lecture-actions">
+                                                <button class="btn-start" onclick="startLecture('math11a')">
+                                                    <i class="fas fa-play"></i> Start
+                                                </button>
+                                                <button class="btn-icon" onclick="editLecture('math11a')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive Marks Management -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Marks Management</h3>
+                            <div class="card-actions">
+                                <select class="filter-select" onchange="filterMarks(this.value)">
+                                    <option value="all">All Classes</option>
+                                    <option value="12a">Class 12A</option>
+                                    <option value="12b">Class 12B</option>
+                                    <option value="11a">Class 11A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="marks-overview">
+                                <div class="marks-chart">
+                                    <canvas id="marksChart"></canvas>
+                                </div>
+                                <div class="marks-summary-stats">
+                                    <div class="marks-stat">
+                                        <span class="number">78%</span>
+                                        <span class="label">Class Average</span>
+                                    </div>
+                                    <div class="marks-stat">
+                                        <span class="number">95%</span>
+                                        <span class="label">Highest Score</span>
+                                    </div>
+                                    <div class="marks-stat">
+                                        <span class="number">45%</span>
+                                        <span class="label">Lowest Score</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="marks-actions">
+                                <button class="btn-primary" onclick="addMarks()">
+                                    <i class="fas fa-plus"></i> Add Marks
+                                </button>
+                                <button class="btn-secondary" onclick="viewReports()">
+                                    <i class="fas fa-chart-bar"></i> Reports
+                                </button>
+                                <button class="btn-secondary" onclick="exportMarks()">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                            <div class="marks-detailed">
+                                <div class="marks-class">
+                                    <div class="class-header">
+                                        <h4>Class 12A - Mathematics</h4>
+                                        <div class="class-stats">
+                                            <span class="average">Avg: 78%</span>
+                                            <span class="students">30 students</span>
+                                        </div>
+                                    </div>
+                                    <div class="marks-distribution">
+                                        <div class="grade-distribution">
+                                            <div class="grade-item">
+                                                <span class="grade">A+ (90-100)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 20%"></div>
+                                                </div>
+                                                <span class="count">6</span>
+                                            </div>
+                                            <div class="grade-item">
+                                                <span class="grade">A (80-89)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 40%"></div>
+                                                </div>
+                                                <span class="count">12</span>
+                                            </div>
+                                            <div class="grade-item">
+                                                <span class="grade">B (70-79)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 30%"></div>
+                                                </div>
+                                                <span class="count">9</span>
+                                            </div>
+                                            <div class="grade-item">
+                                                <span class="grade">C (60-69)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 10%"></div>
+                                                </div>
+                                                <span class="count">3</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="marks-class">
+                                    <div class="class-header">
+                                        <h4>Class 12B - Physics</h4>
+                                        <div class="class-stats">
+                                            <span class="average">Avg: 82%</span>
+                                            <span class="students">28 students</span>
+                                        </div>
+                                    </div>
+                                    <div class="marks-distribution">
+                                        <div class="grade-distribution">
+                                            <div class="grade-item">
+                                                <span class="grade">A+ (90-100)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 25%"></div>
+                                                </div>
+                                                <span class="count">7</span>
+                                            </div>
+                                            <div class="grade-item">
+                                                <span class="grade">A (80-89)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 45%"></div>
+                                                </div>
+                                                <span class="count">13</span>
+                                            </div>
+                                            <div class="grade-item">
+                                                <span class="grade">B (70-79)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 25%"></div>
+                                                </div>
+                                                <span class="count">7</span>
+                                            </div>
+                                            <div class="grade-item">
+                                                <span class="grade">C (60-69)</span>
+                                                <div class="grade-bar">
+                                                    <div class="grade-fill" style="width: 5%"></div>
+                                                </div>
+                                                <span class="count">1</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive Attendance Management -->
+                    <div class="card detailed-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-check"></i> Attendance Management</h3>
+                            <div class="card-actions">
+                                <button class="btn-icon" onclick="viewAttendanceCalendar()">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </button>
+                                <button class="btn-icon" onclick="exportAttendance()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="attendance-tabs">
+                                <button class="tab-btn active" onclick="showAttendanceTab('today')">Today</button>
+                                <button class="tab-btn" onclick="showAttendanceTab('weekly')">This Week</button>
+                                <button class="tab-btn" onclick="showAttendanceTab('monthly')">This Month</button>
+                            </div>
+                            <div class="attendance-content">
+                                <div class="attendance-tab active" id="today-attendance">
+                                    <div class="attendance-overview">
+                                        <div class="attendance-chart">
+                                            <canvas id="attendanceChartTeacher"></canvas>
+                                        </div>
+                                        <div class="attendance-summary-stats">
+                                            <div class="attendance-stat">
+                                                <span class="number">92%</span>
+                                                <span class="label">Overall</span>
+                                            </div>
+                                            <div class="attendance-stat">
+                                                <span class="number">150</span>
+                                                <span class="label">Total Students</span>
+                                            </div>
+                                            <div class="attendance-stat">
+                                                <span class="number">12</span>
+                                                <span class="label">Absent Today</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="attendance-actions">
+                                        <button class="btn-primary" onclick="takeAttendance()">
+                                            <i class="fas fa-check-circle"></i> Take Attendance
+                                        </button>
+                                        <button class="btn-secondary" onclick="viewAttendanceReports()">
+                                            <i class="fas fa-chart-bar"></i> Reports
+                                        </button>
+                                        <button class="btn-secondary" onclick="sendAbsenceNotifications()">
+                                            <i class="fas fa-bell"></i> Notify Parents
+                                        </button>
+                                    </div>
+                                    <div class="attendance-classes">
+                                        <div class="attendance-class">
+                                            <div class="class-header">
+                                                <h4>Class 12A - Mathematics</h4>
+                                                <div class="class-time">9:00 AM - 10:00 AM</div>
+                                            </div>
+                                            <div class="attendance-details">
+                                                <div class="attendance-stats">
+                                                    <div class="stat-item present">
+                                                        <i class="fas fa-check-circle"></i>
+                                                        <span>Present: 28/30</span>
+                                                    </div>
+                                                    <div class="stat-item absent">
+                                                        <i class="fas fa-times-circle"></i>
+                                                        <span>Absent: 2/30</span>
+                                                    </div>
+                                                    <div class="stat-item late">
+                                                        <i class="fas fa-clock"></i>
+                                                        <span>Late: 1/30</span>
+                                                    </div>
+                                                </div>
+                                                <div class="attendance-percentage">
+                                                    <span class="percentage">93%</span>
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 93%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="attendance-actions">
+                                                <button class="btn-icon" onclick="viewClassAttendance('12a')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon" onclick="editAttendance('12a')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="attendance-class">
+                                            <div class="class-header">
+                                                <h4>Class 12B - Physics</h4>
+                                                <div class="class-time">10:30 AM - 11:30 AM</div>
+                                            </div>
+                                            <div class="attendance-details">
+                                                <div class="attendance-stats">
+                                                    <div class="stat-item present">
+                                                        <i class="fas fa-check-circle"></i>
+                                                        <span>Present: 25/28</span>
+                                                    </div>
+                                                    <div class="stat-item absent">
+                                                        <i class="fas fa-times-circle"></i>
+                                                        <span>Absent: 3/28</span>
+                                                    </div>
+                                                    <div class="stat-item late">
+                                                        <i class="fas fa-clock"></i>
+                                                        <span>Late: 0/28</span>
+                                                    </div>
+                                                </div>
+                                                <div class="attendance-percentage">
+                                                    <span class="percentage">89%</span>
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 89%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="attendance-actions">
+                                                <button class="btn-icon" onclick="viewClassAttendance('12b')">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon" onclick="editAttendance('12b')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Results -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clipboard-list"></i> Test Results</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="test-results">
+                                <div class="test-item">
+                                    <div class="test-info">
+                                        <h4>Mathematics Test 1</h4>
+                                        <p>Class 12A - 25 Students</p>
+                                    </div>
+                                    <div class="test-stats">
+                                        <span>Avg: 78%</span>
+                                        <span>Highest: 95%</span>
+                                    </div>
+                                </div>
+                                <div class="test-item">
+                                    <div class="test-info">
+                                        <h4>Physics Quiz 2</h4>
+                                        <p>Class 12B - 28 Students</p>
+                                    </div>
+                                    <div class="test-stats">
+                                        <span>Avg: 82%</span>
+                                        <span>Highest: 98%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Tracking -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Student Progress</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-chart">
+                                <canvas id="progressChart"></canvas>
+                            </div>
+                            <div class="progress-summary">
+                                <div class="progress-item">
+                                    <span>Improving</span>
+                                    <span class="positive">+12%</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span>Stable</span>
+                                    <span class="neutral">0%</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span>Declining</span>
+                                    <span class="negative">-5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="events-list">
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <span class="day">15</span>
+                                        <span class="month">Dec</span>
+                                    </div>
+                                    <div class="event-details">
+                                        <h4>Parent-Teacher Meeting</h4>
+                                        <p>2:00 PM - Conference Room</p>
+                                    </div>
+                                </div>
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <span class="day">20</span>
+                                        <span class="month">Dec</span>
+                                    </div>
+                                    <div class="event-details">
+                                        <h4>Science Fair</h4>
+                                        <p>10:00 AM - Auditorium</p>
+                                    </div>
+                                </div>
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <span class="day">25</span>
+                                        <span class="month">Dec</span>
+                                    </div>
+                                    <div class="event-details">
+                                        <h4>Holiday Break</h4>
+                                        <p>All Day - School Closed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div id="chatbot" class="chatbot hidden">
+        <div class="chatbot-header">
+            <h3><i class="fas fa-robot"></i> Sarthi</h3>
+            <button class="chatbot-close" id="chatbotClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    <i class="fas fa-robot"></i>
+                    <p>Hello! I'm Sarthi, your AI assistant. How can I help you today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal hidden">
+        <div class="modal-content quiz-modal">
+            <div class="modal-header">
+                <div class="quiz-header-info">
+                    <h3 id="quizTitle">Mathematics 2023 - Set 1</h3>
+                    <div class="quiz-timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="quizTimer">03:00:00</span>
+                    </div>
+                </div>
+                <button class="modal-close" id="quizClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="quiz-stats">
+                        <span id="currentQuestion">1</span> of <span id="totalQuestions">50</span>
+                        <span class="quiz-score">Score: <span id="currentScore">0</span></span>
+                    </div>
+                </div>
+                <div class="quiz-content">
+                    <div class="question-section">
+                        <div class="question-header">
+                            <span class="question-number">Question 1</span>
+                            <span class="question-marks">[4 Marks]</span>
+                        </div>
+                        <div class="question-text" id="questionText">
+                            What is the derivative of x² + 3x + 2?
+                        </div>
+                        <div class="question-options" id="questionOptions">
+                            <label class="option">
+                                <input type="radio" name="answer" value="A">
+                                <span class="option-text">2x + 3</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="answer" value="B">
+                                <span class="option-text">2x + 2</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="answer" value="C">
+                                <span class="option-text">x + 3</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="answer" value="D">
+                                <span class="option-text">2x + 5</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="quiz-navigation">
+                        <button class="btn-nav" id="prevQuestion" onclick="previousQuestion()">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <div class="question-numbers">
+                            <button class="question-nav active" onclick="goToQuestion(1)">1</button>
+                            <button class="question-nav" onclick="goToQuestion(2)">2</button>
+                            <button class="question-nav" onclick="goToQuestion(3)">3</button>
+                            <button class="question-nav" onclick="goToQuestion(4)">4</button>
+                            <button class="question-nav" onclick="goToQuestion(5)">5</button>
+                            <span class="more-questions">...</span>
+                        </div>
+                        <button class="btn-nav" id="nextQuestion" onclick="nextQuestion()">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="quiz-actions">
+                    <button class="btn-secondary" onclick="pauseQuiz()">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button class="btn-warning" onclick="markForReview()">
+                        <i class="fas fa-flag"></i> Mark for Review
+                    </button>
+                    <button class="btn-primary" onclick="submitQuiz()">
+                        <i class="fas fa-check"></i> Submit Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Results Modal -->
+    <div id="quizResultsModal" class="modal hidden">
+        <div class="modal-content results-modal">
+            <div class="modal-header">
+                <h3>Quiz Results</h3>
+                <button class="modal-close" id="resultsClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="results-summary">
+                    <div class="score-circle">
+                        <div class="score-percentage" id="finalScore">85%</div>
+                        <div class="score-label">Your Score</div>
+                    </div>
+                    <div class="results-details">
+                        <div class="result-item">
+                            <span class="label">Correct Answers:</span>
+                            <span class="value" id="correctAnswers">42/50</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Time Taken:</span>
+                            <span class="value" id="timeTaken">2h 45m</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Rank:</span>
+                            <span class="value" id="quizRank">3rd out of 150</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Improvement:</span>
+                            <span class="value positive" id="improvement">+5% from last attempt</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-analysis">
+                    <h4>Subject-wise Performance</h4>
+                    <div class="subject-performance">
+                        <div class="subject-item">
+                            <span class="subject-name">Algebra</span>
+                            <div class="subject-bar">
+                                <div class="subject-fill" style="width: 90%"></div>
+                            </div>
+                            <span class="subject-score">90%</span>
+                        </div>
+                        <div class="subject-item">
+                            <span class="subject-name">Calculus</span>
+                            <div class="subject-bar">
+                                <div class="subject-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="subject-score">85%</span>
+                        </div>
+                        <div class="subject-item">
+                            <span class="subject-name">Geometry</span>
+                            <div class="subject-bar">
+                                <div class="subject-fill" style="width: 80%"></div>
+                            </div>
+                            <span class="subject-score">80%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-actions">
+                    <button class="btn-primary" onclick="reviewAnswers()">
+                        <i class="fas fa-eye"></i> Review Answers
+                    </button>
+                    <button class="btn-secondary" onclick="retakeQuiz()">
+                        <i class="fas fa-redo"></i> Retake Quiz
+                    </button>
+                    <button class="btn-secondary" onclick="shareResults()">
+                        <i class="fas fa-share"></i> Share Results
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Profile</h3>
+                <button class="modal-close" id="profileClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-details">
+                        <h4 id="profileName">John Doe</h4>
+                        <p id="profileRole">Student</p>
+                        <p id="profileEmail">john.doe@school.edu</p>
+                        <p id="profileId">ID: 2023001</p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-primary">Edit Profile</button>
+                    <button class="btn-secondary">Change Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
